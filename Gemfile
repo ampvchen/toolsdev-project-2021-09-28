@@ -35,6 +35,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use Boostrap for styling
+gem 'bootstrap', '~> 5.1.0'
+
 # Use Highstock for Charting
 gem 'highstock-rails', git: 'https://github.com/bc-RoryRegnell/highstock-rails'
 
