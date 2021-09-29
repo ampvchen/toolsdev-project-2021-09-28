@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/bc-RoryRegnell/highstock-rails
+  revision: 98f575ba355c1b78c7bd20f468fa2170bb8a922b
+  specs:
+    highstock-rails (8.2.2)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -167,6 +174,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
+  highstock-rails!
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
@@ -182,4 +190,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   2.2.13
+   2.2.27
