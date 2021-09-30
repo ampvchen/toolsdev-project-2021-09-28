@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HiringProject</title>
+    <title>BigCommerce Home</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><%= image_tag "logo.png", class: "titleArea-logo" %></a>
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <%= image_tag "logo.png", class: "titleArea-logo d-inline-block align-text-top" %>
+          <span class="align-text-middle fs-6 ms-2">BigCommerce Home</span>
+        </a>
       </div>
     </nav>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

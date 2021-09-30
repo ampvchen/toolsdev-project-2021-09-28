@@ -1,7 +1,21 @@
-<div id="container" style="height: 400px;"></div>
+<div class="my-2">
+  <div class="dropdown">
+    <span class="align-text-middle text-muted">Select Location:</span>
+    <button class="btn btn-primary dropdown-toggle ms-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false">
+      <%= Location.first.nickname%>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLocation">
+      <% Location.all.each do |location| %>
+        <li><a class="dropdown-item" href="#"><%= location.city%>, <%= location.state %> (<%= location.nickname %>)</a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div id="chart" style="height: 400px;" class="my-4 rounded"></div>
 
 <script>
-  Highcharts.chart('container', {
+  Highcharts.chart('chart', {
     chart: {
       type: 'spline',
       scrollablePlotArea: {
