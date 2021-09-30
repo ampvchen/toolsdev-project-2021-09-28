@@ -6,4 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Location.create(name: 'Austin', lat: 30.404251, long: -97.849442)
+Location.create(location_id: 'ATX1', nickname: 'Austin HQ', city: 'Austin', state: 'TX', lat: 30.404251, long: -97.849442)
