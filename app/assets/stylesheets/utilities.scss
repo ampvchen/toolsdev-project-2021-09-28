@@ -1,0 +1,33 @@
+// Hover
+.hover\:bg-primary:hover { background: $primary; }
+.hover\:bg-secondary:hover { background: $secondary; }
+
+.hover\:bg-gray-100:hover { background: $gray-100; }
+.hover\:bg-gray-200:hover { background: $gray-200; }
+.hover\:bg-gray-300:hover { background: $gray-300; }
+.hover\:bg-gray-400:hover { background: $gray-400; }
+.hover\:bg-gray-500:hover { background: $gray-500; }
+.hover\:bg-gray-600:hover { background: $gray-600; }
+.hover\:bg-gray-700:hover { background: $gray-700; }
+.hover\:bg-gray-800:hover { background: $gray-800; }
+.hover\:bg-gray-900:hover { background: $gray-900; }
+
+// Letter spacing
+.tracking-tighter { letter-spacing: -0.05em; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-normal { letter-spacing: 0em; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em;}
+
+
+// Text colors
+.text-yellow-100 { color: $yellow-100; }
+.text-yellow-200 { color: $yellow-200; }
+.text-yellow-300 { color: $yellow-300; }
+.text-yellow-400 { color: $yellow-400; }
+.text-yellow-500 { color: $yellow-500; }
+.text-yellow-600 { color: $yellow-600; }
+.text-yellow-700 { color: $yellow-700; }
+.text-yellow-800 { color: $yellow-800; }
+.text-yellow-900 { color: $yellow-900; }
