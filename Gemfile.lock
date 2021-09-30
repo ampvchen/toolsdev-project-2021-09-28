@@ -68,6 +68,10 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.7.0)
     ffi (1.12.2)
@@ -190,6 +194,7 @@ DEPENDENCIES
   bootstrap (~> 5.1.0)
   byebug
   coffee-rails (~> 4.2)
+  dotenv-rails
   highstock-rails!
   jbuilder (~> 2.5)
   jquery-rails
