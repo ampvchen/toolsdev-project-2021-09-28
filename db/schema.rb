@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_30_011110) do
+ActiveRecord::Schema.define(version: 2021_10_02_173106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2021_09_30_011110) do
     t.string "state"
     t.string "nickname"
     t.string "location_id"
+  end
+
+  create_table "temperatures", force: :cascade do |t|
+    t.datetime "datetime"
+    t.integer "temp_c"
+    t.integer "temp_f"
+    t.integer "location_id"
+    t.text "weather_desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
