@@ -1,16 +1,26 @@
 <div>
   <div class="my-4 d-flex place-items-center justify-content-between">
     <div class="d-flex place-items-center">
-      <div class="dropdown">
-        <button class="btn border hover:bg-gray-300 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false">
+      <%= content_tag "div", id: "locations", class: "dropdown", data: {url: locations_url} do %>
+        <button id="location-selected"
+                class="btn border hover:bg-gray-300 dropdown-toggle"
+                type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                data-bs-offset="0,10"
+                aria-expanded="false">
           <%= Location.first.nickname%>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLocation">
-          <% Location.all.each do |location| %>
-            <li><a class="dropdown-item" href="#"><%= location.city%>, <%= location.state %> (<%= location.nickname %>)</a></li>
+
+        <ul id="location-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLocation">
+          <% @locations.each do |location| %>
+            <li value='<%= location.id %>'>
+              <a class="dropdown-item" href="#">
+                <%= location.nickname %>
+              </a>
+            </li>
           <% end %>
         </ul>
-      </div>
+      <% end %>
     </div>
     <div class="d-flex place-items-center">
       <div style="height: 24px; width: 24px;">
@@ -21,190 +31,15 @@
   </div>
 
   <div style="padding: 3px 0 1px; background: white;" class="rounded-3 my-4">
-    <div id="container1" class="my-3" style="height: 480px; min-width: 310px"></div>
+    <div id="chart-weather" class="chart my-3"></div>
   </div>
   <div style="padding: 3px 0 1px; background: white;" class="rounded-3 my-4">
-    <div id="container2" class="my-3" style="height: 480px; min-width: 310px"></div>
+    <div id="chart-highlow" class="chart my-3"></div>
   </div>
 
   <div class="text-end">
-    <p class="fs-6 text-muted">Last updated: <%= DateTime.now.strftime('%F, %T') %></p>
+    <p class="fs-6 text-muted">Last updated: <span><%= DateTime.now.strftime('%F, %T') %></span></p>
   </div>
 
 </div>
-
-<script>
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  });
-</script>
-
-<script>
-  var loc = { name: "Austin HQ" }
-  Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function (data) {
-    Highcharts.setOptions({
-      lang: {
-        rangeSelectorFrom: 'From',
-        rangeSelectorTo: 'To'
-      }
-    });
-    Highcharts.stockChart('container1', {
-      exporting: false,
-      legend: { enabled: true },
-      rangeSelector: {
-        buttonTheme: { // styles for the buttons
-          fill: 'none',
-          stroke: 'none',
-          'stroke-width': 0,
-          r: 4,
-          style: {
-            color: 'gray',
-            fontWeight: 'normal'
-          },
-          states: {
-            hover: {
-            },
-            select: {
-              fill: '#0D52FF',
-              style: {
-                color: 'white'
-              }
-            }
-            // disabled: { ... }
-          }
-        },
-        // inputBoxBorderColor: 'transparent',
-        // inputBoxWidth: 120,
-        // inputBoxHeight: 18,
-        inputStyle: {
-          color: '#0D52FF',
-          fontWeight: 'bold'
-        },
-        labelStyle: {
-          color: 'gray',
-          fontWeight: 'bold'
-        },
-        selected: 1
-      },
-
-      title: {
-        text: `Weather for <b>${loc.name}</b>`
-      },
-
-      series: [{
-        name: 'AAPL',
-        data: data,
-        type: 'spline',
-        tooltip: {
-          valueDecimals: 2
-        }
-      }],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500
-          },
-          chartOptions: {
-            chart: {
-              height: 400
-            },
-            subtitle: {
-              text: null
-            },
-            navigator: {
-              enabled: false
-            }
-          }
-        }]
-      }
-    });
-  });
-
-</script>
-
-<script>
-  Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function (data) {
-    Highcharts.setOptions({
-      lang: {
-        rangeSelectorFrom: 'From',
-        rangeSelectorTo: 'To'
-      }
-    });
-    Highcharts.stockChart('container2', {
-      exporting: false,
-      legend: { enabled: true },
-      rangeSelector: {
-        buttonTheme: { // styles for the buttons
-          fill: 'none',
-          stroke: 'none',
-          'stroke-width': 0,
-          r: 4,
-          style: {
-            color: 'gray',
-            fontWeight: 'normal'
-          },
-          states: {
-            hover: {
-            },
-            select: {
-              fill: '#0D52FF',
-              style: {
-                color: 'white'
-              }
-            }
-            // disabled: { ... }
-          }
-        },
-        // inputBoxBorderColor: 'transparent',
-        // inputBoxWidth: 120,
-        // inputBoxHeight: 18,
-        inputStyle: {
-          color: '#0D52FF',
-          fontWeight: 'bold'
-        },
-        labelStyle: {
-          color: 'gray',
-          fontWeight: 'bold'
-        },
-        selected: 1
-      },
-
-
-      title: {
-        text: '3-Hour Highs and Lows'
-      },
-
-      series: [{
-        name: 'AAPL',
-        data: data,
-        type: 'spline',
-        tooltip: {
-          valueDecimals: 2
-        }
-      }],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500
-          },
-          chartOptions: {
-            chart: {
-              height: 400
-            },
-            subtitle: {
-              text: null
-            },
-            navigator: {
-              enabled: false
-            }
-          }
-        }]
-      }
-    });
-  });
-
-</script>
 
