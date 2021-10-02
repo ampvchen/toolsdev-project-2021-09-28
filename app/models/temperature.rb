@@ -1,5 +1,10 @@
 class Temperature < ApplicationRecord
+  belongs_to :location
   serialize :weather_desc, Array
 
-  belongs_to :location
+  validates :datetime, uniqueness: {
+    scope: :location_id,
+    message: "should only have one temp per location"
+  }
+
 end
