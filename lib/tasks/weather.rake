@@ -6,7 +6,6 @@ namespace :weather do
     # TODO: check all locations
     location = Location.first
 
-
     # TODO: Handle errors
     res = init_weather(
       "#{location.lat},#{location.long}"
@@ -41,6 +40,7 @@ namespace :weather do
 
   desc "Update weather"
   task :update => :environment do
+    logger.info 'Update weather'
   end
 
   desc "Clear all weather data"
