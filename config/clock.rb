@@ -7,5 +7,5 @@ module Clockwork
     puts "Running #{job}"
   end
 
-  every(1.hour, 'Update weather'){ UpdateWeatherJob.perform_later args }
+  every(1.hour, 'Update weather'){ UpdateWeatherJob.perform_later }
 end
