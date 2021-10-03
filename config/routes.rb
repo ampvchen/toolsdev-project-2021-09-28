@@ -10,8 +10,10 @@ Rails.application.routes.draw do
     get 'temperatures/high_low', to: 'temperatures#high_low'
   end
 
-  # Limit access to Development
-  # TODO: Setup Devise to make the WebUI only available to :admin
-  mount Sidekiq::Web => '/sidekiq' if Rails.env.development?
-
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      username == 'admin' && password == ENV['SIDEKIQ_PASSWORD']
+    end
+  end
+  mount Sidekiq::Web => '/sidekiq'
 end
