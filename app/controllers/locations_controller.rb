@@ -9,10 +9,10 @@ class LocationsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   private
+
   def set_location
     @location = Location.find(params[:id])
   end
