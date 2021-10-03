@@ -13,5 +13,7 @@ module HiringProject
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'UTC'
     config.active_record.default_timezone = :utc
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
