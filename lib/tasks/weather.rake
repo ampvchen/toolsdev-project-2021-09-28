@@ -43,6 +43,11 @@ namespace :weather do
   task :update => :environment do
   end
 
+  desc "Clear all weather data"
+  task :clear_all => :environment do
+    Temperature.delete_all
+  end
+
   private
 
   def init_weather(location)
