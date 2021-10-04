@@ -15,7 +15,6 @@ module PagesHelper
       name << ", #{location.state}"
     end
     name << " (#{location.nickname})" unless location.nickname.nil?
-
     name
   end
 end
