@@ -17,7 +17,7 @@ namespace :weather do
     Location.all.each do |location|
       res = update_weather("#{location.lat}, #{location.long}")
       if res.is_a?(Net::HTTPSuccess)
-        parse_json(res)
+        create_temperatures(location, res)
       end
     end
 
