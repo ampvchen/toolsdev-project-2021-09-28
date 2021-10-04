@@ -20,6 +20,7 @@ namespace :weather do
         create_temperatures(location, res)
       end
     end
+    Snitcher.snitch(ENV['SNITCH_TOKEN'])
 
   end
 
