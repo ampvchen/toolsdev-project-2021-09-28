@@ -1,16 +1,13 @@
 <div>
   <div class="my-4 d-flex place-items-center justify-content-between">
-    <div class="d-flex place-items-center w-1/3">
-      <%= content_tag "div", id: "locations", class: "dropdown w-full", data: {url: locations_url} do %>
+    <div class="d-flex place-items-center">
+      <div class="text-muted">Office Location:</div>
+      <%= content_tag "div", id: "locations", class: "ms-2 dropdown", data: {url: locations_url} do %>
         <% location = Location.first%>
         <button id="location-selected"
                 value="<%= location.id %>"
-                name='<%= if location.nickname.nil?
-                            "#{location.city}, #{ location.state.nil? ? location.country : location.state}"
-                          else
-                            location.nickname
-                          end %>'
-                class="btn border w-full hover:bg-gray-300 dropdown-toggle"
+                name="<%= location_name(location) %>"
+                class="btn border hover:bg-gray-300 dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 data-bs-offset="0,10"
@@ -19,19 +16,14 @@
           <%= "(#{location.nickname})" unless location.nickname.nil? %>
         </button>
 
-        <ul id="location-dropdown" class="dropdown-menu w-full" aria-labelledby="dropdownMenuLocation">
+        <ul id="location-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuLocation">
           <% @locations.each do |location| %>
             <li
               value='<%= location.id %>'
-              name='<%= if location.nickname.nil?
-                          "#{location.city}, #{ location.state.nil? ? location.country : location.state}"
-                        else
-                          location.nickname
-                        end %>'
+              name='<%= location_name(location) %>'
             >
               <a class="dropdown-item" href="#">
-                <%= location.city %>, <%= location.state.nil? ? location.country : location.state %>
-                <%= "(#{location.nickname})" unless location.nickname.nil? %>
+                <%= location_long_name(location) %>
               </a>
             </li>
           <% end %>
