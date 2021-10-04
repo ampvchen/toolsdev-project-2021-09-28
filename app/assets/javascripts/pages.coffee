@@ -151,26 +151,42 @@ jQuery ->
       }
     }]
 
+  chartDailyAverage = Highcharts.stockChart 'chart-daily-average',
+    legend:  enabled: false
+    title:
+      text: "Daily Average"
+
+    series: [{
+      name: 'Average'
+      type: 'spline'
+      showInNavigator: true
+      tooltip: {
+        valueDecimals: 0
+      }
+    }]
+
   updateChartWeatherData = () ->
     console.log("#{Date.now()}: Updating weather data ")
     setChartWeatherData()
     setChartHighLowData()
+    setChartDailyAverage()
 
   setChartWeatherData = (init=false) ->
-    $('#loading-chart-weather').removeClass("visually-hidden")
-
     $.get "/locations/#{loc.id}/temperatures", (data) ->
       chartWeather.series[0].setData(data[0])
       chartWeather.series[1].setData(data[1])
       chartWeather.setTitle({ text: "Weather for <b>#{loc.name}</b>" })
       if init
         # Force reload to fix range position
-        # TODO: Fix this through setExtremes
         chartWeather.update({rangeSelector: { selected: 3 }})
 
   setChartHighLowData = () ->
     $.get "/locations/#{loc.id}/temperatures/high_low", (data) ->
       chartHighLow.series[0].setData(data[0])
       chartHighLow.series[1].setData(data[1])
+
+  setChartDailyAverage = () ->
+    $.get "/locations/#{loc.id}/temperatures/daily_average", (data) ->
+      chartDailyAverage.series[0].setData(data)
 
   updateChartWeatherData(true)

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :locations do
     get 'temperatures', to: 'temperatures#index'
     get 'temperatures/high_low', to: 'temperatures#high_low'
+    get 'temperatures/daily_average', to: 'temperatures#daily_average'
   end
 
   if Rails.env.production?

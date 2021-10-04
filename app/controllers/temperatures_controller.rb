@@ -1,5 +1,5 @@
 class TemperaturesController < ApplicationController
-  before_action :set_location, only: %i[index forecast high_low]
+  before_action :set_location, only: %i[index high_low daily_average]
 
   def index
     @temperatures = Temperature.where(location: @location)
@@ -23,6 +23,22 @@ class TemperaturesController < ApplicationController
     ref = get_high_low(@location, @location.temperatures.first.datetime)
     respond_to do |format|
       format.json { render json: ref, status: :ok}
+    end
+  end
+
+  def daily_average
+    temperatures_by_date = @location.temperatures.select(:datetime, :temp_f)
+                             .group_by { |t| t.datetime.to_date }
+    temperatures_averages = []
+    temperatures_by_date.each do |t|
+      time = t[0].to_datetime.to_i * 1000
+      temp_arr = t[1].pluck(:temp_f)
+
+      temperatures_averages.push([time, temp_arr.sum / temp_arr.size ])
+    end
+
+    respond_to do |format|
+      format.json { render json: temperatures_averages, status: :ok}
     end
   end
 
