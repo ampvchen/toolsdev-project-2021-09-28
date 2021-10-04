@@ -30,3 +30,8 @@ fifth:
   temp_f: 79
   location_id: 1
 
+sixth:
+  datetime: 2021-09-02 10:00:00
+  temp_c: 26
+  temp_f: 78
+  location_id: 1
