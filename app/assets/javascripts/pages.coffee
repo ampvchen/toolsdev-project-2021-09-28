@@ -3,16 +3,36 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
-
-  # setInterval () ->
-  #   updateChartWeatherData()
-  # , ((60 * 1000) * 30)
+  setInterval () ->
+    updateChartWeatherData()
+  , ((60 * 1000) * 30)
 
   # Load weather
   loc = {
     id: $('#location-selected').attr('value')
     name: $('#location-selected').attr('name')
   }
+
+  currentDay = () =>
+    now = new Date()
+
+    utc_start = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      0, 0, 0, 0)
+
+    utc_stop = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() ,
+      now.getUTCHours(),
+      now.getUTCMinutes(),
+      now.getUTCSeconds(),
+      now.getUTCMilliseconds())
+
+    [utc_start, utc_stop]
+
 
   $('ul#location-dropdown li').click ->
     event.preventDefault()
@@ -46,12 +66,13 @@ jQuery ->
             # disabled: { ... }
       buttons: [
         {
-          # type: 'day'
-          # count: 1
+          type: 'day'
+          count: 1
           text: 'Cd'
           events:
             click: ->
-              chartWeather.xAxis[0].setExtremes(1630580400000, 1633579200000, true)
+              cd= currentDay()
+              chartWeather.xAxis[0].setExtremes(cd[0], cd[1], true)
         },{
           type: 'day'
           count: 1
@@ -131,6 +152,7 @@ jQuery ->
     }]
 
   updateChartWeatherData = () ->
+    console.log("#{Date.now()}: Updating weather data ")
     setChartWeatherData()
     setChartHighLowData()
 
