@@ -1,6 +1,6 @@
 # Tools Dev Project
 
-This project will show the weather for BigCommerce office locations.
+This project will show the weather for BigCommerce office locations and will automatically pull new data every hour. The frontend client will automatically check for new data every 30 minutes. 
 
 ## Requirements
 
