@@ -4,7 +4,6 @@ class Temperature < ApplicationRecord
 
   validates :datetime, uniqueness: {
     scope: :location_id,
-    message: "should only have one temp per location"
+    message: "should only have one temp per location and datetime"
   }
-
 end
