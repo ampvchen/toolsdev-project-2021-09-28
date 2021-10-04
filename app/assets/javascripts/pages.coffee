@@ -101,6 +101,8 @@ jQuery ->
         color: 'gray'
         fontWeight: 'bold'
 
+      selected: 3
+
     responsive: rules: [{
       condition:
         maxWidth: 500
@@ -166,19 +168,15 @@ jQuery ->
     }]
 
   updateChartWeatherData = () ->
-    console.log("#{Date.now()}: Updating weather data ")
     setChartWeatherData()
     setChartHighLowData()
     setChartDailyAverage()
 
-  setChartWeatherData = (init=false) ->
+  setChartWeatherData = () ->
     $.get "/locations/#{loc.id}/temperatures", (data) ->
       chartWeather.series[0].setData(data[0])
       chartWeather.series[1].setData(data[1])
       chartWeather.setTitle({ text: "Weather for <b>#{loc.name}</b>" })
-      if init
-        # Force reload to fix range position
-        chartWeather.update({rangeSelector: { selected: 3 }})
 
   setChartHighLowData = () ->
     $.get "/locations/#{loc.id}/temperatures/high_low", (data) ->
@@ -189,4 +187,4 @@ jQuery ->
     $.get "/locations/#{loc.id}/temperatures/daily_average", (data) ->
       chartDailyAverage.series[0].setData(data)
 
-  updateChartWeatherData(true)
+  updateChartWeatherData()
