@@ -1,13 +1,32 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  datetime: 2021-10-02 12:31:06
-  tempC: 
-  tempF: 
-  location_id: 
+  datetime: 2021-09-02 05:00:00
+  temp_c: 28
+  temp_f: 82
+  location_id: 1
 
 two:
-  datetime: 2021-10-02 12:31:06
-  tempC: 
-  tempF: 
-  location_id: 
+  datetime: 2021-09-02 06:00:00
+  temp_c: 27
+  temp_f: 81
+  location_id: 1
+
+three:
+  datetime: 2021-09-02 07:00:00
+  temp_c: 27
+  temp_f: 80
+  location_id: 1
+
+four:
+  datetime: 2021-09-02 08:00:00
+  temp_c: 26
+  temp_f: 79
+  location_id: 1
+
+fifth:
+  datetime: 2021-09-02 09:00:00
+  temp_c: 26
+  temp_f: 79
+  location_id: 1
+

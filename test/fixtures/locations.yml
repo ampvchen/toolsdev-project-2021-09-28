@@ -4,8 +4,20 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  id: 1
+  nickname: "Austin HQ"
+  city: "Austin"
+  state: "TX"
+  lat: 30.404251
+  long: -97.849442
+  location_id: "AUS1"
+
+two:
+  id: 2
+  nickname: "Four Points"
+  city: "Austin"
+  state: "TX"
+  lat: 30.268525
+  long: -97.740958
+  location_id: "AUS2"
