@@ -3,25 +3,47 @@ class TemperaturesController < ApplicationController
 
   def index
     @temperatures = Temperature.where(location: @location)
-    @temperatures_array = []
+    temperatures_arr = []
 
     @temperatures.each do |temperature|
-      @temperatures_array.push([
+      temperatures_arr.push([
                                  temperature.datetime.to_i.to_i * 1000,
                                  temperature.temp_f
                                ])
     end
 
+    forecast_arr = get_forecast("#{@location.lat}, #{@location.long}")
+
     respond_to do |format|
-      format.json { render json: @temperatures_array, status: :ok }
+      format.json { render json: [temperatures_arr, forecast_arr], status: :ok }
     end
   end
 
-  def forecast
-    # Proxy the request
-    res = forecast_request("#{@location.lat}, #{@location.long}")
-    json = []
+  def high_low
+    ref = get_high_low(@location, @location.temperatures.first.datetime)
+    respond_to do |format|
+      format.json { render json: ref, status: :ok}
+    end
+  end
 
+  private
+
+  def get_forecast(location)
+    # Proxy the request
+    # TODO: Add caching
+    uri = URI('https://api.worldweatheronline.com/premium/v1/weather.ashx')
+    params = {
+      q: location,
+      extra: 'utcDateTime',
+      num_of_days: 3,
+      tp: 1,
+      format: 'json',
+      key: ENV['WEATHERAPI_KEY']
+    }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
+    json = []
     if res.is_a?(Net::HTTPSuccess)
       JSON.parse(res.body)['data']['weather'].each do |day|
         day['hourly'].each do |hour|
@@ -39,33 +61,8 @@ class TemperaturesController < ApplicationController
         end
       end
     end
-    respond_to do |format|
-      format.json { render json: json, status: :ok }
-    end
-  end
 
-  def high_low
-    ref = get_high_low(@location, @location.temperatures.first.datetime)
-    respond_to do |format|
-      format.json { render json: ref, status: :ok}
-    end
-  end
-
-  private
-
-  def forecast_request(location)
-    uri = URI('https://api.worldweatheronline.com/premium/v1/weather.ashx')
-    params = {
-      q: location,
-      extra: 'utcDateTime',
-      num_of_days: 3,
-      tp: 1,
-      format: 'json',
-      key: ENV['WEATHERAPI_KEY']
-    }
-    uri.query = URI.encode_www_form(params)
-
-    Net::HTTP.get_response(uri)
+    json
   end
 
   def get_high_low(location, start, arr = [[], []])
