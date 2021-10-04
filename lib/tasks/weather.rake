@@ -20,8 +20,7 @@ namespace :weather do
         create_temperatures(location, res)
       end
     end
-    Snitcher.snitch(ENV['SNITCH_TOKEN'])
-
+    Snitcher.snitch(ENV['SNITCHER_TOKEN'])
   end
 
   desc 'Clear all weather data'
