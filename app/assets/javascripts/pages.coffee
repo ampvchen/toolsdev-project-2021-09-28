@@ -3,16 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
+
+  # setInterval () ->
+  #   updateChartWeatherData()
+  # , ((60 * 1000) * 30)
+
+  # Load weather
+  loc = {
+    id: $('#location-selected').attr('value')
+    name: $('#location-selected').attr('name')
+  }
+
   $('ul#location-dropdown li').click ->
     event.preventDefault()
     $('button#location-selected').text($(this).text().trim())
-
-  setInterval () ->
+    loc.id = $(this).attr('value')
+    loc.name = $(this).attr('name')
     updateChartWeatherData()
-  , 60 * 1000
 
-  # Load weather
-  loc = { name: $('#location-selected').text() }
   # Highcharts.getJSON '/temperatures.json', (data) ->
   Highcharts.setOptions
     exporting: false
@@ -38,13 +46,12 @@ jQuery ->
             # disabled: { ... }
       buttons: [
         {
-          type: 'day'
-          count: 1
+          # type: 'day'
+          # count: 1
           text: 'Cd'
           events:
             click: ->
-              console.log("CLICK")
-              chartWeather.update({})
+              chartWeather.xAxis[0].setExtremes(1630580400000, 1633579200000, true)
         },{
           type: 'day'
           count: 1
@@ -124,27 +131,24 @@ jQuery ->
     }]
 
   updateChartWeatherData = () ->
-   $.get "/locations/1/temperatures/forecast", (data) ->
-     chartWeather.series[1].setData(data)
+    setChartWeatherData()
+    setChartHighLowData()
 
-  setChartWeatherData = () ->
+  setChartWeatherData = (init=false) ->
     $('#loading-chart-weather').removeClass("visually-hidden")
 
-    $.get "/locations/1/temperatures/forecast", (data) ->
-      chartWeather.series[1].setData(data)
-      # Force reload to fix range position
-      # TODO: Change to only run on init
-      chartWeather.update({rangeSelector: { selected: 3 }})
-      # $('#loading-chart-weather').addClass("visually-hidden")
-
-    $.get "/locations/1/temperatures", (data) ->
-      chartWeather.series[0].setData(data)
-      chartWeather.update({rangeSelector: { selected: 3 }})
+    $.get "/locations/#{loc.id}/temperatures", (data) ->
+      chartWeather.series[0].setData(data[0])
+      chartWeather.series[1].setData(data[1])
+      chartWeather.setTitle({ text: "Weather for <b>#{loc.name}</b>" })
+      if init
+        # Force reload to fix range position
+        # TODO: Fix this through setExtremes
+        chartWeather.update({rangeSelector: { selected: 3 }})
 
   setChartHighLowData = () ->
-    $.get "/locations/1/temperatures/high_low", (data) ->
+    $.get "/locations/#{loc.id}/temperatures/high_low", (data) ->
       chartHighLow.series[0].setData(data[0])
       chartHighLow.series[1].setData(data[1])
 
-  setChartWeatherData()
-  setChartHighLowData()
+  updateChartWeatherData(true)
